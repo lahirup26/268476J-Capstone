@@ -1,6 +1,6 @@
 # Credit Card Fraud Detection under Extreme Class Imbalance
 
-CS5998 Capstone Project — A A L N Perera (268476J)
+CS5998 Capstone Project - Perera A A L N - (268476J)
 
 ## Overview
 
