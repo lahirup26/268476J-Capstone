@@ -17,7 +17,16 @@ problem, and judges models by precision, recall, F1 and PR-AUC instead of accura
 
 [Credit Card Fraud Detection](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud)
 (ULB Machine Learning Group, Kaggle): 284,807 transactions, 492 fraud. The raw data is not
-stored in this repository. A download step will be added.
+stored in this repository.
+
+To get the data, either log in to Kaggle once with `kaggle auth login`, or download
+`creditcard.csv` by hand into `data/raw/`. Then run:
+
+```
+python scripts/download_data.py
+```
+
+The script downloads the file if it is missing and checks its rows, columns and fraud count.
 
 ## Repository structure
 
