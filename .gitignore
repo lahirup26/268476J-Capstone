@@ -5,6 +5,7 @@ data/processed/*
 !data/processed/.gitkeep
 *.csv
 *.zip
+!results/tables/*.csv
 
 # Python
 __pycache__/
@@ -28,3 +29,6 @@ Thumbs.db
 
 # Secrets
 kaggle.json
+
+# Trained models (re-created by the training scripts)
+models/
