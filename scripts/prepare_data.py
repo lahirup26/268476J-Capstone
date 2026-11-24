@@ -1,4 +1,4 @@
-"""Remove duplicates, split the data and save the splits to data/processed.
+"""Remove duplicates, add features, split the data and save the splits to data/processed.
 
 Usage:
     python scripts/prepare_data.py
@@ -8,7 +8,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from src import config, data  # noqa: E402
+from src import config, data, features  # noqa: E402
 
 
 def main() -> None:
@@ -16,6 +16,9 @@ def main() -> None:
     df, info = data.remove_duplicates(df)
     print(f"Rows: {info['rows_before']:,} -> {info['rows_after']:,} "
           f"(removed {info['duplicates']:,} duplicates, {info['fraud_duplicates']} of them fraud)")
+
+    df = features.add_time_features(df)
+    print(f"Added features: {', '.join(features.TIME_FEATURES)}")
 
     train, val, test = data.split(df)
     data.save_splits(train, val, test)
