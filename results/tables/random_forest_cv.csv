@@ -1,0 +1,4 @@
+,cv_pr_auc_mean,cv_pr_auc_std,cv_precision_mean,cv_precision_std,cv_recall_mean,cv_recall_std,cv_f1_mean,cv_f1_std
+RF,0.8305,0.0666,0.9418,0.0236,0.7462,0.0499,0.832,0.038
+RF (class weights),0.83,0.0639,0.9309,0.0224,0.718,0.0422,0.8104,0.0343
+RF (SMOTE),0.8421,0.0633,0.8907,0.0222,0.8094,0.0673,0.847,0.0459
