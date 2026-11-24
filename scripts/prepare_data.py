@@ -18,7 +18,8 @@ def main() -> None:
           f"(removed {info['duplicates']:,} duplicates, {info['fraud_duplicates']} of them fraud)")
 
     df = features.add_time_features(df)
-    print(f"Added features: {', '.join(features.TIME_FEATURES)}")
+    df = features.add_rolling_features(df)
+    print(f"Added features: {', '.join(features.TIME_FEATURES + features.ROLLING_FEATURES)}")
 
     train, val, test = data.split(df)
     data.save_splits(train, val, test)
