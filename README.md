@@ -28,6 +28,12 @@ python scripts/download_data.py
 
 The script downloads the file if it is missing and checks its rows, columns and fraud count.
 
+## System architecture
+
+![System architecture](docs/architecture.png)
+
+Regenerate with `python scripts/make_architecture_diagram.py`.
+
 ## Repository structure
 
 ```
