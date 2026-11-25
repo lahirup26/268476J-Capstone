@@ -3,7 +3,7 @@ is fitted only on the data the model is trained on."""
 
 from imblearn.over_sampling import SMOTE
 from imblearn.pipeline import Pipeline
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import IsolationForest, RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import StratifiedKFold, cross_validate
 
@@ -55,6 +55,30 @@ def make_random_forest(
         random_state=config.RANDOM_STATE,
     )))
     return Pipeline(steps)
+
+
+def make_isolation_forest(columns: list[str], n_estimators: int = 300) -> Pipeline:
+    """Isolation Forest: unsupervised outlier detection, labels are never used.
+
+    Anomaly score = -score_samples(X), so a HIGHER score means MORE unusual
+    (same direction as a fraud probability).
+    """
+    return Pipeline(
+        [
+            ("prep", make_preprocessor(columns)),
+            ("model", IsolationForest(
+                n_estimators=n_estimators,
+                contamination="auto",
+                n_jobs=-1,
+                random_state=config.RANDOM_STATE,
+            )),
+        ]
+    )
+
+
+def anomaly_scores(pipeline: Pipeline, X):
+    """Higher = more anomalous."""
+    return -pipeline.score_samples(X)
 
 
 def cross_validate_model(pipeline, X, y, n_jobs: int = -1) -> dict:
