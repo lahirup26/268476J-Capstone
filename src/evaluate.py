@@ -105,6 +105,31 @@ def plot_confusion(y_true, scores, threshold: float, title: str, name: str | Non
     return fig
 
 
+def plot_threshold_curve(y_true, scores, title: str, marks: dict | None = None,
+                         name: str | None = None):
+    """Precision, recall and F1 against the decision threshold.
+
+    marks: {label: threshold} drawn as vertical lines (e.g. the chosen thresholds).
+    """
+    precision, recall, thresholds = precision_recall_curve(y_true, scores)
+    precision, recall = precision[:-1], recall[:-1]
+    f1 = 2 * precision * recall / np.clip(precision + recall, 1e-12, None)
+
+    fig, ax = plt.subplots(figsize=(6.5, 4.2))
+    ax.plot(thresholds, precision, label="Precision")
+    ax.plot(thresholds, recall, label="Recall")
+    ax.plot(thresholds, f1, label="F1", linestyle="--")
+    for (label, t), color in zip((marks or {}).items(), ["tab:red", "tab:purple", "tab:brown"]):
+        ax.axvline(t, color=color, linestyle=":", label=f"{label} ({t:.3f})")
+    ax.set_xlabel("Decision threshold")
+    ax.set_ylim(0, 1.02)
+    ax.set_xlim(0, 1)
+    ax.set_title(title)
+    ax.legend(loc="lower left", fontsize=8)
+    _save(fig, name)
+    return fig
+
+
 def _save(fig, name: str | None) -> None:
     if name:
         config.FIGURES.mkdir(parents=True, exist_ok=True)
